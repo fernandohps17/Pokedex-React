@@ -22,8 +22,8 @@
   --color-shadow: #7b62a3;
   --color-unknow: #757575;
 
-  --color-primary: #006d77;
-  --color-primary-hover: #83c5be;
+  --color-primary: #000066;
+  --color-primary-hover: #06b5ee;
 }
 
 * {
@@ -52,7 +52,7 @@ header {
 }
 
 .logo img {
-  width: 150px;
+  width: 200px;
 }
 
 header form {

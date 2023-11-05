@@ -1,13 +1,13 @@
 import { AppRouter } from "./Components/AppRouter"
+import { PokemonProvider } from "./Context/PokemonProvider"
 
 function App() {
 
   return (
     <>
-      <div>
-        pokedex react
-      </div>
-      <AppRouter />
+      <PokemonProvider>
+        <AppRouter />
+      </PokemonProvider>
     </>
   )
 }
