@@ -1,3 +1,5 @@
+// Import Components
+import { FilterBar } from "../../Components/FilterBar"
 import { PokemonList } from "../../Components/PokemonList"
 
 export const HomePage = () => {
@@ -24,6 +26,7 @@ export const HomePage = () => {
                 </div>
             </div>
             <PokemonList />
+            <FilterBar />
         </>
     )
 }

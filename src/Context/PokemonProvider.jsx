@@ -86,5 +86,3 @@ export const PokemonProvider = ({ children }) => {
         </PokemonContext.Provider>
     )
 }
-
-// minuto 55
