@@ -4,6 +4,7 @@ import { useForm } from "../Hook/useForm"
 
 export const PokemonProvider = ({ children }) => {
 
+    const [limit, setLimit] = useState(50)
     const [offset, setOffset] = useState(0)
     const [allPokemons, setAllPokemons] = useState([])
     const [globalPokemons, setGlobalPokemons] = useState([])
@@ -16,7 +17,7 @@ export const PokemonProvider = ({ children }) => {
     })
 
     // Llamar 50 pokemones a la api *************************************************
-    const getAllPokemons = async (limit = 50) => {
+    const getAllPokemons = async () => {
         const baseURL = 'https://pokeapi.co/api/v2/'
         const res = await fetch(`${baseURL}pokemon?limit=${limit}&offset=${offset}`)
         const data = await res.json();
@@ -71,8 +72,6 @@ export const PokemonProvider = ({ children }) => {
         getPokemonsByID()
     }, [])
 
-
-
     return (
         <PokemonContext.Provider value={{
             valueSearch,
@@ -87,3 +86,5 @@ export const PokemonProvider = ({ children }) => {
         </PokemonContext.Provider>
     )
 }
+
+// minuto 55
