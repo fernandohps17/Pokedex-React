@@ -4,7 +4,7 @@ import { useForm } from "../Hook/useForm"
 
 export const PokemonProvider = ({ children }) => {
 
-    const [limit, setLimit] = useState(50)
+
     const [offset, setOffset] = useState(0)
     const [allPokemons, setAllPokemons] = useState([])
     const [globalPokemons, setGlobalPokemons] = useState([])
@@ -17,7 +17,7 @@ export const PokemonProvider = ({ children }) => {
     })
 
     // Llamar 50 pokemones a la api *************************************************
-    const getAllPokemons = async () => {
+    const getAllPokemons = async(limit = 50) => {
         const baseURL = 'https://pokeapi.co/api/v2/'
         const res = await fetch(`${baseURL}pokemon?limit=${limit}&offset=${offset}`)
         const data = await res.json();
@@ -72,15 +72,79 @@ export const PokemonProvider = ({ children }) => {
         getPokemonsByID()
     }, [])
 
+    // *********************************************************
+
+    // BTN cargar más
+    const onClickLoadMore = () => {
+        setOffset(offset + 50)
+    }
+
+    // *******************************************************
+    // Filter Function + State
+    const [typeSelected, setTypeSelected] = useState({
+        grass: false,
+        normal: false,
+        fighting: false,
+        flying: false,
+        poison: false,
+        ground: false,
+        rock: false,
+        bug: false,
+        ghost: false,
+        steel: false,
+        fire: false,
+        water: false,
+        electric: false,
+        psychic: false,
+        ice: false,
+        dragon: false,
+        dark: false,
+        fairy: false,
+        unknow: false,
+        shadow: false,
+    });
+
+    const [filteredPokemons, setfilteredPokemons] = useState([]);
+
+    const handleCheckbox = e => {
+        setTypeSelected({
+            ...typeSelected,
+            [e.target.name]: e.target.checked,
+        });
+
+        if (e.target.checked) {
+            const filteredResults = globalPokemons.filter(pokemon =>
+                pokemon.types
+                    .map(type => type.type.name)
+                    .includes(e.target.name)
+            );
+            setfilteredPokemons([...filteredPokemons, ...filteredResults]);
+        } else {
+            const filteredResults = filteredPokemons.filter(
+                pokemon =>
+                    !pokemon.types
+                        .map(type => type.type.name)
+                        .includes(e.target.name)
+            );
+            setfilteredPokemons([...filteredResults]);
+        }
+    };
+
     return (
         <PokemonContext.Provider value={{
             valueSearch,
-            onInputChange,
-            onResetForm,
-            allPokemons,
-            globalPokemons,
-            getPokemonsByID,
-
+			onInputChange,
+			onResetForm,
+			allPokemons,
+			globalPokemons,
+			getPokemonsByID,
+			onClickLoadMore,
+            loading,
+            setLoading,
+            active,
+            setActive,
+            handleCheckbox,
+			filteredPokemons,
         }}>
             {children}
         </PokemonContext.Provider>
